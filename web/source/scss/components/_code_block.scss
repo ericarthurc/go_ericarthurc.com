@@ -1,0 +1,60 @@
+.code-block {
+	margin: 20px 0;
+	display: grid;
+	border-radius: 0.5rem;
+	border: 1px solid #37373d;
+	background-color: #1b1b1f;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+	.code-block-header {
+		height: 15px;
+		display: flex;
+		margin: 0;
+		justify-content: end;
+	}
+
+	.language-name {
+		color: #e6e6e6;
+		margin-top: 5px;
+		margin-right: 10px;
+		font-size: 13px;
+	}
+
+	pre.aero {
+		overflow-y: auto;
+		overflow-x: auto;
+		padding: 10px 15px;
+
+		display: flex;
+		margin-top: 0;
+		border-top: none;
+		overflow: auto;
+
+		&::-webkit-scrollbar-track {
+			border-radius: 10px;
+			background-color: transparent;
+		}
+
+		&::-webkit-scrollbar {
+			height: 6px;
+			background-color: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 0.25rem;
+			background-color: #5b5c5c;
+		}
+	}
+
+	.aero code {
+		font-family: 'GeistMono', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+			'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+		-webkit-font-smoothing: auto;
+		-moz-osx-font-smoothing: auto;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 20px;
+		border-radius: 0.25rem;
+		white-space: pre;
+	}
+}
