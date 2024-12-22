@@ -5,9 +5,11 @@ import (
 	"net/http"
 	"os"
 
-	"ericarthurc.com/internal/controllers/blog"
+	"ericarthurc.com/internal/controller/blog"
+	"ericarthurc.com/internal/controller/state"
+	"ericarthurc.com/internal/database"
 	"ericarthurc.com/internal/orbit"
-	"ericarthurc.com/internal/views"
+	"ericarthurc.com/internal/view"
 	"github.com/go-chi/chi/v5"
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
@@ -21,10 +23,12 @@ func main() {
 	}
 
 	// initialize database pool
-	// dbPool, err := database.NewDbPool()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	dbPool, err := database.NewDbPool()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	state := state.NewState(dbPool)
 
 	stylesRaw, err := os.ReadFile("web/compiled/css/main.css")
 	if err != nil {
@@ -54,10 +58,10 @@ func main() {
 		// r.Mount("/")
 
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			orb.TemplRender(w, 200, views.IndexPage())
+			orb.TemplRender(w, 200, view.Index())
 		})
 
-		r.Mount("/blog", blog.Routes(orb))
+		r.Mount("/blog", blog.Routes(state, orb))
 	})
 
 	orbit.Launch(r)

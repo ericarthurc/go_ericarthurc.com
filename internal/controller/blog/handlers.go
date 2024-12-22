@@ -3,8 +3,7 @@ package blog
 import (
 	"net/http"
 
-	"ericarthurc.com/internal/views"
-	"github.com/go-chi/chi/v5"
+	"ericarthurc.com/internal/view"
 )
 
 type handlers struct {
@@ -20,8 +19,8 @@ func newHandlers(router *router) *handlers {
 // @Render the blog index
 func (h *handlers) blogIndexHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if err := h.TemplRender(w, 200, views.BlogPage()); err != nil {
-			http.Error(w, "failed to render template", http.StatusInternalServerError)
+		if err := h.TemplRender(w, 200, view.BlogIndex()); err != nil {
+			h.Error(w, http.StatusInternalServerError, "failed to render template")
 		}
 	}
 }
@@ -31,8 +30,8 @@ func (h *handlers) blogIndexHTML() http.HandlerFunc {
 // @Render the blog post
 func (h *handlers) blogSlugHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		slug := chi.URLParam(r, "slug")
+		// slug := chi.URLParam(r, "slug")
 
-		h.Text(w, 200, "Blog post: "+slug)
+		h.TemplRender(w, 200, view.BlogSlug())
 	}
 }
