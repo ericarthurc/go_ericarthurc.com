@@ -44,6 +44,8 @@ func (o *Orbit) HTML(w http.ResponseWriter, code int, html string) {
 func (o *Orbit) TemplRender(w http.ResponseWriter, code int, view templ.Component) error {
 	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(code)
+
+	// wrap the temple view in the main layout
 	if err := views.Main(o.GlobalStyles, view).Render(context.Background(), w); err != nil {
 		return err
 	}

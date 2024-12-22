@@ -20,6 +20,12 @@ func main() {
 		log.Fatal("error loading .env file")
 	}
 
+	// initialize database pool
+	// dbPool, err := database.NewDbPool()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
 	stylesRaw, err := os.ReadFile("web/compiled/css/main.css")
 	if err != nil {
 		log.Fatal("error loading compiled css file")
