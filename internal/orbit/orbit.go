@@ -41,10 +41,14 @@ func (o *Orbit) HTML(w http.ResponseWriter, code int, html string) {
 	w.Write([]byte(html))
 }
 
-func (o *Orbit) TemplRender(w http.ResponseWriter, code int, view templ.Component) {
+func (o *Orbit) TemplRender(w http.ResponseWriter, code int, view templ.Component) error {
 	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(code)
-	views.Main(o.GlobalStyles, view).Render(context.Background(), w)
+	if err := views.Main(o.GlobalStyles, view).Render(context.Background(), w); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (o *Orbit) Error(w http.ResponseWriter, code int, errorMessage string) {

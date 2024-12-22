@@ -18,9 +18,10 @@ func newRouter(orb *orbit.Orbit) *blogRouter {
 	}
 }
 
+// route: /blog
 func Routes(orb *orbit.Orbit) *blogRouter {
 	r := newRouter(orb)
-	h := blogHandlers{r}
+	h := newBlogHandlers(r)
 
 	r.Get("/", h.TemplRoot())
 
