@@ -6,24 +6,24 @@ import (
 )
 
 // Can pass global state to the router here
-type indexRouter struct {
+type router struct {
 	*orbit.Orbit
 	*chi.Mux
 }
 
-func newRouter(orb *orbit.Orbit) *indexRouter {
-	return &indexRouter{
+func newRouter(orb *orbit.Orbit) *router {
+	return &router{
 		Orbit: orb,
 		Mux:   chi.NewRouter(),
 	}
 }
 
 // route: /
-func Routes(orb *orbit.Orbit) *indexRouter {
+func Routes(orb *orbit.Orbit) *router {
 	r := newRouter(orb)
-	// h := indexHandlers{r}
+	h := newHandlers(r)
 
-	// r.Get("/", h.TemplRoot())
+	r.Get("/", h.indexHTML())
 
 	return r
 }

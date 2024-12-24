@@ -6,10 +6,10 @@ import (
 	"os"
 
 	"ericarthurc.com/internal/controller/blog"
-	"ericarthurc.com/internal/controller/state"
+	"ericarthurc.com/internal/controller/index"
 	"ericarthurc.com/internal/database"
 	"ericarthurc.com/internal/orbit"
-	"ericarthurc.com/internal/view"
+	"ericarthurc.com/internal/state"
 	"github.com/go-chi/chi/v5"
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
@@ -50,17 +50,12 @@ func main() {
 	r.Get("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "web/root/robots.txt")
 	})
-	r.Handle("/*", http.StripPrefix("/", http.FileServer(http.Dir("web/static"))))
+	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
 	// routes
 	r.Group(func(r chi.Router) {
 
-		// r.Mount("/")
-
-		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			orb.TemplRender(w, 200, view.Index())
-		})
-
+		r.Mount("/", index.Routes(orb))
 		r.Mount("/blog", blog.Routes(state, orb))
 	})
 

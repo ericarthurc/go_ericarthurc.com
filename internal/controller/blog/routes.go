@@ -1,8 +1,8 @@
 package blog
 
 import (
-	"ericarthurc.com/internal/controller/state"
 	"ericarthurc.com/internal/orbit"
+	"ericarthurc.com/internal/state"
 	"github.com/go-chi/chi/v5"
 )
 

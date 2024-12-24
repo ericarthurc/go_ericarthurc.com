@@ -16,7 +16,7 @@ func newHandlers(router *router) *handlers {
 
 // @Route: /blog
 // @Method: GET
-// @Render the blog index
+// @Render the blog index page
 func (h *handlers) blogIndexHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if err := h.TemplRender(w, 200, view.BlogIndex()); err != nil {
@@ -27,7 +27,7 @@ func (h *handlers) blogIndexHTML() http.HandlerFunc {
 
 // @Route: /blog/{slug}
 // @Method: GET
-// @Render the blog post
+// @Render the blog post page dynamically by slug
 func (h *handlers) blogSlugHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// slug := chi.URLParam(r, "slug")

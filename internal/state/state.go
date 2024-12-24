@@ -7,15 +7,13 @@ import (
 )
 
 type State struct {
-	DbPool *database.DbPool
-
-	PostMap *xsync.MapOf[string, *model.Post]
+	DbPool  *database.DbPool
+	PostMap *xsync.MapOf[string, model.Post]
 }
 
 func NewState(dbPool *database.DbPool) *State {
-	// postMap := make(map[string]*model.Post)
-	postMap := xsync.NewMapOf[string, *model.Post]()
-	// postMap.Store("hello-world", &model.Post{})
+	postMap := xsync.NewMapOf[string, model.Post]()
+	// postMap.Store("hello-world", model.Post{})
 
 	return &State{
 		DbPool:  dbPool,
