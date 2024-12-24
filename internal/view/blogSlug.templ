@@ -1,5 +1,12 @@
 package view
 
-templ BlogSlug() {
-	<div>This is the Blog Slug Page</div>
+import "ericarthurc.com/internal/model"
+
+templ BlogSlug(post model.Post) {
+	<div class="blog-layout">
+		<h1>Blog Layouts</h1>
+		<div class="post-content-container">
+			@templ.Raw(post.Content)
+		</div>
+	</div>
 }

@@ -1,0 +1,70 @@
+package components
+
+import (
+	"ericarthurc.com/internal/model"
+	"fmt"
+)
+
+templ PostContainer(featuredPosts []model.Post, nonFeaturedPosts []model.Post) {
+	if len(featuredPosts) > 0 {
+		<div class="post-list-featured">
+			<h4>Featured Posts</h4>
+			<ul class="post-list">
+				for _, p := range featuredPosts {
+					@PostListing(p)
+				}
+			</ul>
+		</div>
+	}
+	if len(nonFeaturedPosts) > 0 {
+		<div class="post-list-non-featured">
+			<h4>Posts</h4>
+			<ul class="post-list">
+				for _, p := range nonFeaturedPosts {
+					@PostListing(p)
+				}
+			</ul>
+		</div>
+	}
+}
+
+templ PostListing(post model.Post) {
+	// <li class="post-listing" class:featured={meta.featured}>
+	<li class="post-listing">
+		<div class="post-listing-header" data-sveltekit-preload-data="false">
+			<a class="post-listing-anchor" href={ templ.URL(fmt.Sprintf("/blog/%s", post.Slug)) }>
+				<p class="post-listing-title">
+					{ post.Title }
+				</p>
+			</a>
+			<div class="post-listing-info-box">
+				<p class="post-listing-date">
+					// {new Date(meta.date).toLocaleDateString('en-us', {
+					// 	month: 'long',
+					// 	day: 'numeric',
+					// 	year: 'numeric'
+					// })}
+				</p>
+				// {#if browser}
+				// 	<span class="post-listing-views-suffix">&nbsp;&nbsp;Views:&nbsp;</span>
+				// 	<span class="post-listing-views">{views}</span>
+				// {/if}
+			</div>
+			if post.Featured {
+				<p class="post-listing-snippet">{ post.Snippet }</p>
+			}
+		</div>
+		<div class="post-listing-categories">
+			// {#each meta.categories as c}
+			// 	<span class="post-listing-category">{c}</span>
+			// {/each}
+		</div>
+		// {#if meta.skills_svgs}
+		// 	<div class="post-listing-skills">
+		// 		{#each meta.skills_svgs as s}
+		// 			{@html s}
+		// 		{/each}
+		// 	</div>
+		// {/if}
+	</li>
+}

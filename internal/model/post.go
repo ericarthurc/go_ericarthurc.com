@@ -25,14 +25,15 @@ type Post struct {
 	Snippet        string    `json:"snippet"`
 	Categories     []string  `json:"categories"`
 	Skills         []string  `json:"skills"`
-	Views          int       `json:"views"`
+	// SkillsSVGs     []string  `json:"skills_svgs"`
+	Views int `json:"views"`
 }
 
 func (p *Post) MarkdownToHTML() error {
 	var outputBuffer bytes.Buffer
 	var errorBuffer bytes.Buffer
 
-	cmd := exec.Command("./scripts/compiled/parser", p.Content)
+	cmd := exec.Command("./scripts/parser/compiled/parser", p.Content)
 	cmd.Stdout = &outputBuffer
 	cmd.Stderr = &errorBuffer
 

@@ -28,7 +28,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	state := state.NewState(dbPool)
+	state, err := state.NewState(dbPool)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	stylesRaw, err := os.ReadFile("web/compiled/css/main.css")
 	if err != nil {

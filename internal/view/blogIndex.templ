@@ -1,5 +1,15 @@
 package view
 
-templ BlogIndex() {
-	<div>This is the Blog Page</div>
+import (
+	"ericarthurc.com/internal/model"
+	"ericarthurc.com/internal/view/components"
+)
+
+templ BlogIndex(featuredPosts []model.Post, nonFeaturedPosts []model.Post) {
+	<div class="main-layout">
+		<div class="page-title-box">
+			<h3>Blog</h3>
+		</div>
+		@components.PostContainer(featuredPosts, nonFeaturedPosts)
+	</div>
 }
