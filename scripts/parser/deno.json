@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "hast-util-to-mdast": "npm:hast-util-to-mdast@^10.1.1",
+    "rehype-stringify": "npm:rehype-stringify@^10.0.1",
+    "remark-parse": "npm:remark-parse@^11.0.0",
+    "remark-rehype": "npm:remark-rehype@^11.1.1",
+    "shiki": "npm:shiki@^1.24.4",
+    "unified": "npm:unified@^11.0.5",
+    "unist-util-visit": "npm:unist-util-visit@^5.0.0"
+  }
+}

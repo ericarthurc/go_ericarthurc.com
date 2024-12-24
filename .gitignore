@@ -6,6 +6,7 @@
 /tmp/
 
 # compiled
+scripts/parser/compiled/*
 web/compiled/*
 *_templ.go
 build

@@ -1,8 +1,10 @@
 package model
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"os/exec"
 	"time"
 
 	"ericarthurc.com/internal/database"
@@ -24,6 +26,24 @@ type Post struct {
 	Categories     []string  `json:"categories"`
 	Skills         []string  `json:"skills"`
 	Views          int       `json:"views"`
+}
+
+func (p *Post) MarkdownToHTML() error {
+	var outputBuffer bytes.Buffer
+	var errorBuffer bytes.Buffer
+
+	cmd := exec.Command("./scripts/compiled/parser", p.Content)
+	cmd.Stdout = &outputBuffer
+	cmd.Stderr = &errorBuffer
+
+	err := cmd.Run()
+	if err != nil {
+		return fmt.Errorf("unable to run parser: %w", err)
+	}
+
+	p.Content = outputBuffer.String()
+
+	return nil
 }
 
 func GetAllPosts(dbp *database.DbPool) ([]Post, error) {
