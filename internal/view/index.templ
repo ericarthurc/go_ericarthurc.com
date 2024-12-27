@@ -1,6 +1,11 @@
 package view
 
-templ Index() {
+import (
+	"ericarthurc.com/internal/model"
+	"ericarthurc.com/internal/view/components"
+)
+
+templ Index(featuredPosts []model.Post, nonFeaturedPosts []model.Post) {
 	<div class="main-layout">
 		<div class="page-title-box">
 			<h3>Home</h3>
@@ -16,7 +21,6 @@ templ Index() {
 				staying ahead of the evolving landscape of HTTP.
 			</p>
 		</div>
-		<h3>POSTS PLACE HOLDER</h3>
-		// <PostContainer posts={data.posts} nonFeatured={false} />
+		@components.PostContainer(featuredPosts, nonFeaturedPosts, false)
 	</div>
 }

@@ -19,7 +19,7 @@ func newHandlers(router *router) *handlers {
 // @Render the index page
 func (h *handlers) indexHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if err := h.TemplRender(w, 200, view.Index()); err != nil {
+		if err := h.TemplRender(w, 200, view.Index(h.State.PostMeta.FeaturedPostsMetaSorted, h.State.PostMeta.NonFeaturedPostsMetaSorted)); err != nil {
 			h.Error(w, http.StatusInternalServerError, "failed to render template")
 		}
 	}

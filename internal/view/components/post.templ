@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-templ PostContainer(featuredPosts []model.Post, nonFeaturedPosts []model.Post) {
+templ PostContainer(featuredPosts []model.Post, nonFeaturedPosts []model.Post, showNonFeatured bool) {
 	if len(featuredPosts) > 0 {
 		<div class="post-list-featured">
 			<h4>Featured Posts</h4>
@@ -16,15 +16,17 @@ templ PostContainer(featuredPosts []model.Post, nonFeaturedPosts []model.Post) {
 			</ul>
 		</div>
 	}
-	if len(nonFeaturedPosts) > 0 {
-		<div class="post-list-non-featured">
-			<h4>Posts</h4>
-			<ul class="post-list">
-				for _, p := range nonFeaturedPosts {
-					@PostListing(p)
-				}
-			</ul>
-		</div>
+	if showNonFeatured {
+		if len(nonFeaturedPosts) > 0 {
+			<div class="post-list-non-featured">
+				<h4>Posts</h4>
+				<ul class="post-list">
+					for _, p := range nonFeaturedPosts {
+						@PostListing(p)
+					}
+				</ul>
+			</div>
+		}
 	}
 }
 

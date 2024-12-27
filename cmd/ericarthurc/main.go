@@ -58,7 +58,7 @@ func main() {
 	// routes
 	r.Group(func(r chi.Router) {
 
-		r.Mount("/", index.Routes(orb))
+		r.Mount("/", index.Routes(state, orb))
 		r.Mount("/blog", blog.Routes(state, orb))
 	})
 

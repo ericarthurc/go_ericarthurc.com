@@ -10,6 +10,6 @@ templ BlogIndex(featuredPosts []model.Post, nonFeaturedPosts []model.Post) {
 		<div class="page-title-box">
 			<h3>Blog</h3>
 		</div>
-		@components.PostContainer(featuredPosts, nonFeaturedPosts)
+		@components.PostContainer(featuredPosts, nonFeaturedPosts, true)
 	</div>
 }
