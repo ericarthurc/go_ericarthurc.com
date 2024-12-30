@@ -2,6 +2,7 @@ package components
 
 import (
 	"ericarthurc.com/internal/model"
+	"ericarthurc.com/internal/state"
 	"fmt"
 )
 
@@ -31,8 +32,7 @@ templ PostContainer(featuredPosts []model.Post, nonFeaturedPosts []model.Post, s
 }
 
 templ PostListing(post model.Post) {
-	// <li class="post-listing" class:featured={meta.featured}>
-	<li class="post-listing">
+	<li class={ "post-listing", templ.KV("featured", post.Featured) }>
 		<div class="post-listing-header" data-sveltekit-preload-data="false">
 			<a class="post-listing-anchor" href={ templ.URL(fmt.Sprintf("/blog/%s", post.Slug)) }>
 				<p class="post-listing-title">
@@ -41,11 +41,7 @@ templ PostListing(post model.Post) {
 			</a>
 			<div class="post-listing-info-box">
 				<p class="post-listing-date">
-					// {new Date(meta.date).toLocaleDateString('en-us', {
-					// 	month: 'long',
-					// 	day: 'numeric',
-					// 	year: 'numeric'
-					// })}
+					{ post.Date.Format("January 2, 2006") }
 				</p>
 				// {#if browser}
 				// 	<span class="post-listing-views-suffix">&nbsp;&nbsp;Views:&nbsp;</span>
@@ -57,16 +53,16 @@ templ PostListing(post model.Post) {
 			}
 		</div>
 		<div class="post-listing-categories">
-			// {#each meta.categories as c}
-			// 	<span class="post-listing-category">{c}</span>
-			// {/each}
+			for _, c := range post.Categories {
+				<span class="post-listing-category">{ c }</span>
+			}
 		</div>
-		// {#if meta.skills_svgs}
-		// 	<div class="post-listing-skills">
-		// 		{#each meta.skills_svgs as s}
-		// 			{@html s}
-		// 		{/each}
-		// 	</div>
-		// {/if}
+		if len(post.Skills) > 0 {
+			<div class="post-listing-skills">
+				for _, s := range post.Skills {
+					@templ.Raw(state.SkillsMap[s])
+				}
+			</div>
+		}
 	</li>
 }

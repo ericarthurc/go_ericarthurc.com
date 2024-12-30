@@ -1,4 +1,4 @@
-package index
+package about
 
 import (
 	"net/http"
@@ -16,10 +16,10 @@ func newHandlers(router *router) *handlers {
 
 // @Route: /
 // @Method: GET
-// @Render the index page
-func (h *handlers) indexHTML() http.HandlerFunc {
+// @Render the about page
+func (h *handlers) aboutIndexHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if err := h.TemplRender(w, r, 200, view.Index(h.State.PostMeta.FeaturedPostsMetaSorted, h.State.PostMeta.NonFeaturedPostsMetaSorted)); err != nil {
+		if err := h.TemplRender(w, r, 200, view.AboutIndex()); err != nil {
 			h.Error(w, http.StatusInternalServerError, "failed to render template")
 		}
 	}

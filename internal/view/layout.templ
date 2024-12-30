@@ -1,6 +1,6 @@
 package view
 
-templ Main(styleInjection string, contents templ.Component) {
+templ Main(styleInjection string, contents templ.Component, currentPath string) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -12,10 +12,11 @@ templ Main(styleInjection string, contents templ.Component) {
 			<title>Ericarthurc.com</title>
 			<link rel="preload" href="/static/fonts/InterVariable.woff2" as="font" crossorigin/>
 			<link rel="preload" href="/static/fonts/GeistMono.ttf" as="font" crossorigin/>
+			<script src="/static/js/htmx.min.js"></script>
 		</head>
 		<body>
 			@devbar()
-			@navbar()
+			@navbar(currentPath)
 			@contents
 		</body>
 	</html>
@@ -65,7 +66,7 @@ templ devbar() {
 	</div>
 }
 
-templ navbar() {
+templ navbar(currentPath string) {
 	<header>
 		<div class="header-logo">
 			<svg
@@ -96,11 +97,11 @@ templ navbar() {
 		</div>
 		<div class="nav-container">
 			<nav class="nav">
-				<div class="nav-links">
-					<a class="link" href="/">Home</a>
-					<a class="link" href="/blog">Blog</a>
-					<a class="link" href="/projects">Projects</a>
-					<a class="link" href="/about">About</a>
+				<div hx-boost="true" class="nav-links">
+					<a class={ "link", templ.KV("active", currentPath == "/") } href="/">Home</a>
+					<a class={ "link", templ.KV("active", currentPath == "/blog") } href="/blog">Blog</a>
+					<a class={ "link", templ.KV("active", currentPath == "/projects") } href="/projects">Projects</a>
+					<a class={ "link", templ.KV("active", currentPath == "/about") } href="/about">About</a>
 				</div>
 			</nav>
 		</div>

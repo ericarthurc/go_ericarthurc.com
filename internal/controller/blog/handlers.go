@@ -20,7 +20,7 @@ func newHandlers(router *router) *handlers {
 // @Render the blog index page
 func (h *handlers) blogIndexHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if err := h.TemplRender(w, 200, view.BlogIndex(h.State.PostMeta.FeaturedPostsMetaSorted, h.State.PostMeta.NonFeaturedPostsMetaSorted)); err != nil {
+		if err := h.TemplRender(w, r, 200, view.BlogIndex(h.State.PostMeta.FeaturedPostsMetaSorted, h.State.PostMeta.NonFeaturedPostsMetaSorted)); err != nil {
 			h.Error(w, http.StatusInternalServerError, "failed to render template")
 		}
 	}
@@ -35,6 +35,6 @@ func (h *handlers) blogSlugHTML() http.HandlerFunc {
 
 		post, _ := h.State.PostMap.Load(slug)
 
-		h.TemplRender(w, 200, view.BlogSlug(post))
+		h.TemplRender(w, r, 200, view.BlogSlug(post))
 	}
 }

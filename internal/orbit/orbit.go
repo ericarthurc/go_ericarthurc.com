@@ -41,12 +41,12 @@ func (o *Orbit) HTML(w http.ResponseWriter, code int, html string) {
 	w.Write([]byte(html))
 }
 
-func (o *Orbit) TemplRender(w http.ResponseWriter, code int, component templ.Component) error {
+func (o *Orbit) TemplRender(w http.ResponseWriter, r *http.Request, code int, component templ.Component) error {
 	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(code)
 
 	// wrap the temple view in the main layout
-	if err := view.Main(o.GlobalStyles, component).Render(context.Background(), w); err != nil {
+	if err := view.Main(o.GlobalStyles, component, r.URL.Path).Render(context.Background(), w); err != nil {
 		return err
 	}
 

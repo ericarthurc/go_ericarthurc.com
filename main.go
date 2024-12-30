@@ -5,8 +5,10 @@ import (
 	"net/http"
 	"os"
 
+	"ericarthurc.com/internal/controller/about"
 	"ericarthurc.com/internal/controller/blog"
 	"ericarthurc.com/internal/controller/index"
+	"ericarthurc.com/internal/controller/project"
 	"ericarthurc.com/internal/database"
 	"ericarthurc.com/internal/orbit"
 	"ericarthurc.com/internal/state"
@@ -28,16 +30,19 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// initialize state
 	state, err := state.NewState(dbPool)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// load compiled global css
 	stylesRaw, err := os.ReadFile("web/compiled/css/main.css")
 	if err != nil {
 		log.Fatal("error loading compiled css file")
 	}
 
+	// initialize orbit with global styles
 	orb := orbit.NewOrbit(string(stylesRaw))
 	r := chi.NewRouter()
 
@@ -60,6 +65,8 @@ func main() {
 
 		r.Mount("/", index.Routes(state, orb))
 		r.Mount("/blog", blog.Routes(state, orb))
+		r.Mount("/projects", project.Routes(state, orb))
+		r.Mount("/about", about.Routes(state, orb))
 	})
 
 	orbit.Launch(r)

@@ -29,8 +29,8 @@ func NewState(dbPool *database.DbPool) (*State, error) {
 		return nil, err
 	}
 
-	// Sort the posts by date
-	// Still needs to sort alphabetically if the dates are the same
+	// sort the posts by date
+	// still needs to sort alphabetically if the dates are the same
 	slices.SortFunc(posts, func(a, b model.Post) int {
 		return a.Date.Compare(b.Date)
 	})
@@ -44,7 +44,10 @@ func NewState(dbPool *database.DbPool) (*State, error) {
 			return nil, err
 		}
 
-		// Store the post in the postMap
+		slices.Sort(p.Skills)
+		slices.Sort(p.Categories)
+
+		// store the post in the postMap
 		postMap.Store(p.Slug, p)
 
 		if p.Featured {

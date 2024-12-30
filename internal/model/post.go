@@ -25,8 +25,7 @@ type Post struct {
 	Snippet        string    `json:"snippet"`
 	Categories     []string  `json:"categories"`
 	Skills         []string  `json:"skills"`
-	// SkillsSVGs     []string  `json:"skills_svgs"`
-	Views int `json:"views"`
+	Views          int       `json:"views"`
 }
 
 func (p *Post) MarkdownToHTML() error {
