@@ -32,7 +32,7 @@ func NewState(dbPool *database.DbPool) (*State, error) {
 	// sort the posts by date
 	// still needs to sort alphabetically if the dates are the same
 	slices.SortFunc(posts, func(a, b model.Post) int {
-		return a.Date.Compare(b.Date)
+		return b.Date.Compare(a.Date)
 	})
 
 	var featured []model.Post
