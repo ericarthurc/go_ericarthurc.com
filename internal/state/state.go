@@ -30,6 +30,7 @@ func NewState(dbPool *database.DbPool) (*State, error) {
 	}
 
 	// Sort the posts by date
+	// Still needs to sort alphabetically if the dates are the same
 	slices.SortFunc(posts, func(a, b model.Post) int {
 		return a.Date.Compare(b.Date)
 	})
