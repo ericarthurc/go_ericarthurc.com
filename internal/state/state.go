@@ -2,6 +2,7 @@ package state
 
 import (
 	"slices"
+	"sync"
 
 	"ericarthurc.com/internal/database"
 	"ericarthurc.com/internal/model"
@@ -29,33 +30,54 @@ func NewState(dbPool *database.DbPool) (*State, error) {
 		return nil, err
 	}
 
-	// sort the posts by date
-	// still needs to sort alphabetically if the dates are the same
-	slices.SortFunc(posts, func(a, b model.Post) int {
-		return b.Date.Compare(a.Date)
-	})
-
 	var featured []model.Post
 	var nonFeatured []model.Post
 
+	var wg sync.WaitGroup
+	errCh := make(chan error, len(posts))
+
 	for _, p := range posts {
-		err := p.MarkdownToHTML()
+		wg.Add(1)
+
+		go func(post *model.Post) {
+			defer wg.Done()
+
+			if err := post.MarkdownToHTML(); err != nil {
+				errCh <- err
+				return
+			}
+
+			slices.Sort(post.Skills)
+			slices.Sort(post.Categories)
+
+			// store the post in the postMap
+			postMap.Store(post.Slug, *post)
+
+			if p.Featured {
+				featured = append(featured, *post)
+			} else {
+				nonFeatured = append(nonFeatured, *post)
+			}
+		}(&p)
+	}
+
+	wg.Wait()
+
+	close(errCh)
+
+	// Check for any errors in the channel
+	for err := range errCh {
 		if err != nil {
 			return nil, err
 		}
-
-		slices.Sort(p.Skills)
-		slices.Sort(p.Categories)
-
-		// store the post in the postMap
-		postMap.Store(p.Slug, p)
-
-		if p.Featured {
-			featured = append(featured, p)
-		} else {
-			nonFeatured = append(nonFeatured, p)
-		}
 	}
+
+	slices.SortFunc(nonFeatured, func(a, b model.Post) int {
+		return b.Date.Compare(a.Date)
+	})
+	slices.SortFunc(featured, func(a, b model.Post) int {
+		return b.Date.Compare(a.Date)
+	})
 
 	return &State{
 		DbPool:  dbPool,

@@ -29,6 +29,7 @@ type Post struct {
 }
 
 func (p *Post) MarkdownToHTML() error {
+	fmt.Println("Start parsing")
 	var outputBuffer bytes.Buffer
 	var errorBuffer bytes.Buffer
 
@@ -42,6 +43,7 @@ func (p *Post) MarkdownToHTML() error {
 	}
 
 	p.Content = outputBuffer.String()
+	fmt.Println("Finish parsing")
 
 	return nil
 }
