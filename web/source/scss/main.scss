@@ -13,31 +13,20 @@ $light: #ffffff;
 $white1: #ffffff;
 $grey1: #d4d4d4;
 $grey2: #8c8a91;
+$red1: #ff5050;
+$red1_a-30: rgba($red1, 0.35);
 $orange1: #db8449;
 $orange1_a-30: rgba($orange1, 0.35);
-
-// test
-$charcoal: #3b4049;
-$cream: #f7f2e0;
-$cream2: #f9d89a;
-$sage: #a8c686;
-$green1: #1d3932;
-$green2: #587975;
-
-// netlify
-$blue: #69a7ff;
-$yellow: #ffd050;
-$teal: #2acec0;
-$purple: #9174f7;
-$orange: #ffa25f;
-
-// christmas
-$christmas-green1: #63b948;
-$christmas-green2: #304829;
-$christmas-red1: #ff5050;
-$christmas-red2: #bc3734;
-$christmas-gold1: #ffdc73;
-$christmas-gold2: #f3d997;
+$yellow1: #eaec45;
+$yellow1_a-30: rgba($yellow1, 0.35);
+$green1: #59df55;
+$green1_a-30: rgba($green1, 0.35);
+$blue1: #2f91e0;
+$blue1_a-30: rgba($blue1, 0.35);
+$purple1: #a245ee;
+$purple1_a-30: rgba($purple1, 0.35);
+$pink1: #ff69b4;
+$pink1_a-30: rgba($pink1, 0.35);
 
 :root {
   --clr-html-bg: #{$dark2};
@@ -67,21 +56,116 @@ $christmas-gold2: #f3d997;
   --clr-nav-link-active: #{$orange1};
 }
 
-:root.christmas {
-  --clr-logo: #{$christmas-red1};
-  --clr-home-title: #{$christmas-gold2};
-  --clr-page-title: #{$christmas-green1};
-  --clr-sec-border-pri: #{$christmas-gold1};
-  --clr-sec-border-sec: #{$christmas-red1};
-  --clr-sec-border-ter: #{$christmas-gold1};
-  --clr-post-cat-feat: #{$christmas-red1};
-  --clr-post-title-hover: #{$christmas-gold1};
-  --clr-post-title-hover-feat: #{$christmas-gold1};
-  --clr-post-date: #{$christmas-green1};
-  --clr-post-date-feat: #{$christmas-green1};
-  --clr-post-views: #{$christmas-gold1};
-  --clr-nav-link-hover: #{$christmas-gold1};
-  --clr-nav-link-active: #{$christmas-gold1};
+:root.red {
+  --clr-logo: #{$red1};
+  --clr-home-title: #{$red1};
+  --clr-page-title: #{$red1};
+  --clr-sec-border-pri: #{$red1};
+  --clr-sec-border-sec: #{$red1};
+  --clr-sec-border-ter: #{$red1};
+  --clr-post-cat-feat: #{$red1};
+  --clr-post-title: #{$red1};
+  --clr-post-cat-border-feat: #{$red1_a-30};
+  --clr-post-skill-border-feat: #{$red1_a-30};
+  --clr-post-views: #{$red1};
+  --clr-nav-link-hover: #{$red1};
+  --clr-nav-link-active: #{$red1};
+}
+
+:root.orange {
+  --clr-logo: #{$orange1};
+  --clr-home-title: #{$orange1};
+  --clr-page-title: #{$orange1};
+  --clr-sec-border-pri: #{$orange1};
+  --clr-sec-border-sec: #{$orange1};
+  --clr-sec-border-ter: #{$orange1};
+  --clr-post-cat-feat: #{$orange1};
+  --clr-post-title: #{$orange1};
+  --clr-post-cat-border-feat: #{$orange1_a-30};
+  --clr-post-skill-border-feat: #{$orange1_a-30};
+  --clr-post-views: #{$orange1};
+  --clr-nav-link-hover: #{$orange1};
+  --clr-nav-link-active: #{$orange1};
+}
+
+:root.yellow {
+  --clr-logo: #{$yellow1};
+  --clr-home-title: #{$yellow1};
+  --clr-page-title: #{$yellow1};
+  --clr-sec-border-pri: #{$yellow1};
+  --clr-sec-border-sec: #{$yellow1};
+  --clr-sec-border-ter: #{$yellow1};
+  --clr-post-cat-feat: #{$yellow1};
+  --clr-post-title: #{$yellow1};
+  --clr-post-cat-border-feat: #{$yellow1_a-30};
+  --clr-post-skill-border-feat: #{$yellow1_a-30};
+  --clr-post-views: #{$yellow1};
+  --clr-nav-link-hover: #{$yellow1};
+  --clr-nav-link-active: #{$yellow1};
+}
+
+:root.green {
+  --clr-logo: #{$green1};
+  --clr-home-title: #{$green1};
+  --clr-page-title: #{$green1};
+  --clr-sec-border-pri: #{$green1};
+  --clr-sec-border-sec: #{$green1};
+  --clr-sec-border-ter: #{$green1};
+  --clr-post-cat-feat: #{$green1};
+  --clr-post-title: #{$green1};
+  --clr-post-cat-border-feat: #{$green1_a-30};
+  --clr-post-skill-border-feat: #{$green1_a-30};
+  --clr-post-views: #{$green1};
+  --clr-nav-link-hover: #{$green1};
+  --clr-nav-link-active: #{$green1};
+}
+
+:root.blue {
+  --clr-logo: #{$blue1};
+  --clr-home-title: #{$blue1};
+  --clr-page-title: #{$blue1};
+  --clr-sec-border-pri: #{$blue1};
+  --clr-sec-border-sec: #{$blue1};
+  --clr-sec-border-ter: #{$blue1};
+  --clr-post-cat-feat: #{$blue1};
+  --clr-post-title: #{$blue1};
+  --clr-post-cat-border-feat: #{$blue1_a-30};
+  --clr-post-skill-border-feat: #{$blue1_a-30};
+  --clr-post-views: #{$blue1};
+  --clr-nav-link-hover: #{$blue1};
+  --clr-nav-link-active: #{$blue1};
+}
+
+:root.purple {
+  --clr-logo: #{$purple1};
+  --clr-home-title: #{$purple1};
+  --clr-page-title: #{$purple1};
+  --clr-sec-border-pri: #{$purple1};
+  --clr-sec-border-sec: #{$purple1};
+  --clr-sec-border-ter: #{$purple1};
+  --clr-post-cat-feat: #{$purple1};
+  --clr-post-title: #{$purple1};
+  --clr-post-cat-border-feat: #{$purple1_a-30};
+  --clr-post-skill-border-feat: #{$purple1_a-30};
+  --clr-post-views: #{$purple1};
+  --clr-nav-link-hover: #{$purple1};
+  --clr-nav-link-active: #{$purple1};
+}
+
+:root.pink {
+  --clr-logo: #{$pink1};
+  --clr-home-title: #{$pink1};
+  --clr-page-title: #{$pink1};
+  --clr-sec-border-pri: #{$pink1};
+  --clr-sec-border-sec: #{$pink1};
+  --clr-sec-border-ter: #{$pink1};
+  --clr-post-cat-feat: #{$pink1};
+  --clr-post-title: #{$pink1};
+  --clr-post-cat-border-feat: #{$pink1_a-30};
+  --clr-post-skill-border-feat: #{$pink1_a-30};
+  --clr-post-views: #{$pink1};
+  --clr-nav-link-hover: #{$pink1};
+  --clr-nav-link-active: #{$pink1};
 }
 
 *,
@@ -150,6 +234,7 @@ header {
 }
 
 .header-logo {
+  user-select: none;
   display: grid;
   justify-items: center;
   padding-bottom: 15px;
@@ -167,6 +252,7 @@ header {
     display: grid;
 
     .nav-links {
+      user-select: none;
       display: flex;
       justify-self: center;
     }

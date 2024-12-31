@@ -33,7 +33,7 @@ templ PostContainer(featuredPosts []model.Post, nonFeaturedPosts []model.Post, s
 
 templ PostListing(post model.Post) {
 	<li class={ "post-listing", templ.KV("featured", post.Featured) }>
-		<div class="post-listing-header" data-sveltekit-preload-data="false">
+		<div class="post-listing-header">
 			<a class="post-listing-anchor" href={ templ.URL(fmt.Sprintf("/blog/%s", post.Slug)) }>
 				<p class="post-listing-title">
 					{ post.Title }

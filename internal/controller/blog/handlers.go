@@ -20,6 +20,8 @@ func newHandlers(router *router) *handlers {
 // @Render the blog index page
 func (h *handlers) blogIndexHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "private, max-age=60")
+
 		if err := h.TemplRender(w, r, 200, view.BlogIndex(h.State.PostMeta.FeaturedPostsMetaSorted, h.State.PostMeta.NonFeaturedPostsMetaSorted)); err != nil {
 			h.Error(w, http.StatusInternalServerError, "failed to render template")
 		}
