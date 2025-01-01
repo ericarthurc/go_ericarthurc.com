@@ -2,7 +2,6 @@ package components
 
 import (
 	"ericarthurc.com/internal/model"
-	"ericarthurc.com/internal/state"
 	"fmt"
 )
 
@@ -57,10 +56,11 @@ templ PostListing(post model.Post) {
 				<span class="post-listing-category">{ c }</span>
 			}
 		</div>
+		// THIS IS SUPER EXPENSIVE!!!!!! Even after changing the cache???
 		if len(post.Skills) > 0 {
 			<div class="post-listing-skills">
 				for _, s := range post.Skills {
-					@templ.Raw(state.SkillsMap[s])
+					@templ.Raw(s)
 				}
 			</div>
 		}

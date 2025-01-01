@@ -19,10 +19,9 @@ func newHandlers(router *router) *handlers {
 // @Render the index page
 func (h *handlers) indexHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", "private, max-age=60")
+		h.State.PostMeta.Mu.RLock()
+		defer h.State.PostMeta.Mu.RUnlock()
 
-		if err := h.TemplRender(w, r, 200, view.Index(h.State.PostMeta.FeaturedPostsMetaSorted, h.State.PostMeta.NonFeaturedPostsMetaSorted)); err != nil {
-			h.Error(w, http.StatusInternalServerError, "failed to render template")
-		}
+		h.TemplRender(w, r, 200, view.Index(h.State.PostMeta.FeaturedPostsMetaSorted, h.State.PostMeta.NonFeaturedPostsMetaSorted), true)
 	}
 }

@@ -12,17 +12,18 @@ import (
 type State struct {
 	DbPool  *database.DbPool
 	PostMap *xsync.MapOf[string, model.Post]
+
 	PostMeta
 }
 
 type PostMeta struct {
+	Mu                         sync.RWMutex
 	FeaturedPostsMetaSorted    []model.Post
 	NonFeaturedPostsMetaSorted []model.Post
 }
 
 func NewState(dbPool *database.DbPool) (*State, error) {
 	postMap := xsync.NewMapOf[string, model.Post]()
-	// postMap.Store("hello-world", model.Post{})
 
 	// call database and get all the posts
 	posts, err := model.GetAllPosts(dbPool)
@@ -47,7 +48,9 @@ func NewState(dbPool *database.DbPool) (*State, error) {
 				return
 			}
 
-			slices.Sort(post.Skills)
+			post.SkillsToSVGs()
+
+			// slices.Sort(post.Skills)
 			slices.Sort(post.Categories)
 
 			// store the post in the postMap
@@ -87,4 +90,8 @@ func NewState(dbPool *database.DbPool) (*State, error) {
 			NonFeaturedPostsMetaSorted: nonFeatured,
 		},
 	}, err
+}
+
+func (s *State) UpdateState() error {
+	return nil
 }

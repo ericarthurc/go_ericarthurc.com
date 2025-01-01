@@ -41,16 +41,14 @@ func (o *Orbit) HTML(w http.ResponseWriter, code int, html string) {
 	w.Write([]byte(html))
 }
 
-func (o *Orbit) TemplRender(w http.ResponseWriter, r *http.Request, code int, component templ.Component) error {
-	w.Header().Set("Content-Type", "text/html")
-	w.WriteHeader(code)
-
-	// wrap the temple view in the main layout
-	if err := view.Main(o.GlobalStyles, component, r.URL.Path).Render(context.Background(), w); err != nil {
-		return err
+func (o *Orbit) TemplRender(w http.ResponseWriter, r *http.Request, code int, component templ.Component, cache bool) {
+	if cache {
+		w.Header().Set("Cache-Control", "private, max-age=60")
 	}
 
-	return nil
+	// wrap the temple view in the main layout
+	view.Main(o.GlobalStyles, component, r.URL.Path).Render(context.Background(), w)
+
 }
 
 func (o *Orbit) Error(w http.ResponseWriter, code int, errorMessage string) {

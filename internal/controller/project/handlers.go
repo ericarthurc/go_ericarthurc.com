@@ -19,10 +19,6 @@ func newHandlers(router *router) *handlers {
 // @Render the project page
 func (h *handlers) projectIndexHTML() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", "private, max-age=60")
-
-		if err := h.TemplRender(w, r, 200, view.ProjectIndex()); err != nil {
-			h.Error(w, http.StatusInternalServerError, "failed to render template")
-		}
+		h.TemplRender(w, r, 200, view.ProjectIndex(), true)
 	}
 }

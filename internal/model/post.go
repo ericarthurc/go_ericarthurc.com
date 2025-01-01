@@ -46,6 +46,12 @@ func (p *Post) MarkdownToHTML() error {
 	return nil
 }
 
+func (p *Post) SkillsToSVGs() {
+	for i, s := range p.Skills {
+		p.Skills[i] = SkillsMap[s]
+	}
+}
+
 func GetAllPosts(dbp *database.DbPool) ([]Post, error) {
 	query := `SELECT * FROM posts`
 
