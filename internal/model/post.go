@@ -4,11 +4,14 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"os/exec"
 	"time"
 
 	"ericarthurc.com/internal/database"
+	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/jackc/pgx/v5"
+	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
+	"github.com/yuin/goldmark/util"
 )
 
 type Post struct {
@@ -28,20 +31,40 @@ type Post struct {
 	Views          int       `json:"views"`
 }
 
+var md = goldmark.New(
+	goldmark.WithExtensions(
+		highlighting.NewHighlighting(
+			highlighting.WithStyle("github-dark"),
+			highlighting.WithWrapperRenderer(func(w util.BufWriter, context highlighting.CodeBlockContext, entering bool) {
+				lang, _ := context.Language()
+
+				if entering {
+					if lang == nil {
+						w.WriteString(`<div><pre class="aero"><code>`)
+						return
+					}
+
+					w.WriteString(fmt.Sprintf(`<div class="code-block"><p class="code-block-header"><span class="language-name">%s</span></p><pre class="aero"><code>`, lang))
+				} else {
+					w.WriteString(`</code></pre></div>`)
+				}
+			}),
+			highlighting.WithFormatOptions(
+				chromahtml.PreventSurroundingPre(true),
+				// chromahtml.WithClasses(true),
+			),
+		),
+	),
+)
+
 func (p *Post) MarkdownToHTML() error {
-	var outputBuffer bytes.Buffer
-	var errorBuffer bytes.Buffer
-
-	cmd := exec.Command("./scripts/parser/compiled/parser", p.Content)
-	cmd.Stdout = &outputBuffer
-	cmd.Stderr = &errorBuffer
-
-	err := cmd.Run()
+	var buf bytes.Buffer
+	err := md.Convert([]byte(p.Content), &buf)
 	if err != nil {
-		return fmt.Errorf("unable to run parser: %w", err)
+		return err
 	}
 
-	p.Content = outputBuffer.String()
+	p.Content = buf.String()
 
 	return nil
 }
